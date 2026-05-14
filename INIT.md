@@ -71,11 +71,11 @@ Look at `skills/` in the toolkit. Pick **2–4 skills** that match this project 
 
 Default suggestions by project type:
 
-- **Next.js** → `nextjs-feature`, `tight-claude-md`, `token-budget`
-- **Python ML** → `ml-paper-repro`, `tight-claude-md`, `token-budget`
-- **Flutter** → `flutter-screen`, `tight-claude-md`, `token-budget`
-- **Full-stack** → all of the above that match the sub-services
-- **Generic** → `tight-claude-md`, `token-budget`
+- **Next.js** → `nextjs-feature`, `tight-claude-md`, `token-budget`, `session-log`
+- **Python ML** → `ml-paper-repro`, `tight-claude-md`, `token-budget`, `session-log`
+- **Flutter** → `flutter-screen`, `tight-claude-md`, `token-budget`, `session-log`
+- **Full-stack** → all of the above that match the sub-services (plus `session-log`)
+- **Generic** → `tight-claude-md`, `token-budget`, `session-log`
 
 To install a chosen skill:
 ```bash

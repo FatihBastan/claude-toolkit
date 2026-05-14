@@ -46,6 +46,7 @@
 - For UI work, run on a device/emulator and verify visually before reporting done.
 - For "where is X used" questions, spawn the **Explore subagent**.
 - Don't touch `android/` or `ios/` native code unless explicitly asked.
+- If `notes/daily/` exists, read the latest entry on session start and log to today's file at session end. (See `session-log` skill.)
 
 ## Don't read
 

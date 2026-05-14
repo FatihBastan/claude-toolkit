@@ -52,6 +52,7 @@
 - Run smoke tests (1 epoch, tiny batch) before full runs — never propose a 12-hour training run untested.
 - For "where is X implemented" questions, spawn the **Explore subagent**.
 - Don't iterate inside `.venv/` or any data folder.
+- If `notes/daily/` exists, read the latest entry on session start and log to today's file at session end. (See `session-log` skill.)
 
 ## Don't read
 

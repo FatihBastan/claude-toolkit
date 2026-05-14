@@ -44,6 +44,7 @@
 - For UI changes, run `npm run dev` and verify in a browser before reporting done.
 - Prefer Edit over Write for existing components.
 - Type-check (`npx tsc --noEmit`) after non-trivial type changes.
+- If `notes/daily/` exists, read the latest entry on session start and log to today's file at session end. (See `session-log` skill.)
 
 ## Don't read
 

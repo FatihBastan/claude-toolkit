@@ -36,6 +36,7 @@ For each sub-service, look for its own `CLAUDE.md` first. If one exists, prefer 
 - **Always identify the service first** before making changes. A change in `frontend/` shouldn't read `backend/` source unless the API contract is involved.
 - For cross-service changes, work service-by-service, not file-by-file.
 - For "where is X" questions, spawn the **Explore subagent** scoped to the relevant service: *"Use Explore on `backend/` to find …"*.
+- If `notes/daily/` exists, read the latest entry on session start and log to today's file at session end. (See `session-log` skill.)
 
 ## Don't read
 

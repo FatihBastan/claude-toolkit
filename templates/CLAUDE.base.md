@@ -31,6 +31,7 @@ Skip if there's nothing surprising — empty is better than padded.}}
 - For "where is X" / "how is Y wired" questions, spawn the **Explore subagent** rather than grepping in the main session.
 - Prefer ranged Read calls (offset/limit) over slurping large files. Files >800 lines: {{list any}}.
 - For UI changes, run the dev server and verify in a browser before reporting done.
+- If `notes/daily/` exists, read the latest entry on session start and log to today's file at session end. (See `session-log` skill.)
 
 ## Don't read
 
