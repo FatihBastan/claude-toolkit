@@ -88,7 +88,23 @@ cp -r ~/claude-toolkit/skills/<skill-name> ~/.claude/skills/
 
 ---
 
-## Step 7 — Report
+## Step 7 — Offer session logging
+
+Ask once: *"Set up session logging for this project? I'll create `notes/daily/` so the global session-log hooks (auto-resume on start, nudge to log on stop) start firing here."*
+
+If yes:
+```bash
+mkdir -p notes/daily
+```
+Then remind Fatih to add `notes/daily/` (and `notes/raw/` if he plans to use it) to `.gitignore` — session logs are personal noise. `notes/wiki/`, if it ever exists, *should* be committed.
+
+If no, leave it alone — the hooks no-op silently in projects without `notes/daily/`. Don't auto-create.
+
+Skip this step if the project already has a `notes/daily/` directory.
+
+---
+
+## Step 8 — Report
 
 One short paragraph (5–8 lines max). Cover:
 - Project type detected
