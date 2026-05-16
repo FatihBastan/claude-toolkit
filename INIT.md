@@ -21,6 +21,7 @@ Inspect the project root with `ls`. Match top-down — first match wins:
 | Signal | Project type | Template |
 |---|---|---|
 | Has multiple top-level service dirs (e.g. `backend/` + `frontend/` + `flutter_frontend/`, or `backend/` + `mobile/`) | Full-stack | `templates/CLAUDE.fullstack.md` |
+| Has `Assets/` AND `ProjectSettings/` | Unity | `templates/CLAUDE.unity.md` |
 | Has `pubspec.yaml` | Flutter | `templates/CLAUDE.flutter.md` |
 | Has `package.json` AND (`next.config.*` OR `app/` OR `pages/`) | Next.js | `templates/CLAUDE.nextjs.md` |
 | Has `pyproject.toml` / `requirements*.txt` / `.venv` AND (PyTorch / `transformers` / `timm` / `*.ipynb` / a `models/` or `train.py`) | Python ML | `templates/CLAUDE.python-ml.md` |
@@ -74,8 +75,11 @@ Default suggestions by project type:
 - **Next.js** → `nextjs-feature`, `tight-claude-md`, `token-budget`, `session-log`
 - **Python ML** → `ml-paper-repro`, `tight-claude-md`, `token-budget`, `session-log`
 - **Flutter** → `flutter-screen`, `tight-claude-md`, `token-budget`, `session-log`
+- **Unity** → `tight-claude-md`, `token-budget`, `session-log` (plus the workflow skills below if the project has Unity Test Framework tests)
 - **Full-stack** → all of the above that match the sub-services (plus `session-log`)
 - **Generic** → `tight-claude-md`, `token-budget`, `session-log`
+
+**Workflow skills (cross-cutting, not in the per-stack defaults):** `tdd`, `bug-hunt`, `root-cause`, `skill-author`. Mention these only if the user signals interest in workflow discipline — they're heavier-handed than the stack-specific scaffolders.
 
 To install a chosen skill:
 ```bash
