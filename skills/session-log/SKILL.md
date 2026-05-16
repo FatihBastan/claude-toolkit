@@ -48,3 +48,5 @@ Trigger phrases: *"resume"*, *"what did we do last time"*, *"read the daily note
 ## Setup note
 
 By default, add `notes/raw/` and `notes/daily/` to `.gitignore` — session logs are personal and noisy. `notes/wiki/` (if used) *should* be committed; codified knowledge travels with the repo. Ask the user which they want before deciding.
+
+When scaffolding `notes/daily/` for the first time, also offer to install the two hooks at `~/claude-toolkit/hooks/` (`session-start-resume.sh` and `stop-session-log.sh`). They make this skill deterministic — auto-resume on session start, block stop until today's entry is written. See `hooks/README.md` in the toolkit for the install steps. The hooks no-op unless `notes/daily/` exists, so installing them in a project that hasn't opted in is harmless.

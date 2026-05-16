@@ -23,6 +23,7 @@ Claude will:
 | [INIT.md](INIT.md) | Instructions Claude follows to init a project from this toolkit. |
 | [templates/](templates/) | `CLAUDE.md` skeletons for the project types I work in, plus a generic don't-read list. |
 | [skills/](skills/) | Custom skills I can install into `~/.claude/skills/` for global use. |
+| [hooks/](hooks/) | Per-project shell hooks that make the `session-log` skill deterministic (auto-resume + stop-nudge). |
 | [tips.md](tips.md) | My notes on token-efficient habits with Claude (Explore agent, ranged reads, etc.). |
 
 ## Installing skills globally
