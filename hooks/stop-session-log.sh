@@ -31,7 +31,6 @@ if [ -f "$TODAY_FILE" ] && [ -n "$(find "$TODAY_FILE" -mmin -60 2>/dev/null)" ];
   exit 0
 fi
 
-jq -n --arg path "notes/daily/$TODAY.md" '{
-  decision: "block",
-  reason: ("Before stopping: this project uses session logging but today's entry has not been written in the last hour. Invoke the session-log skill (Mode 1) and write a Session block to " + $path + ", then stop. If the user explicitly said not to log, acknowledge and stop without writing.")
-}'
+REASON="Before stopping: this project uses session logging but today's entry has not been written in the last hour. Invoke the session-log skill (Mode 1) and write a Session block to notes/daily/$TODAY.md, then stop. If the user explicitly said not to log, acknowledge and stop without writing."
+
+jq -n --arg reason "$REASON" '{decision: "block", reason: $reason}'
