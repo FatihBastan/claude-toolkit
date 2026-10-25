@@ -1,7 +1,6 @@
 ---
 name: ship
-description: Pre-merge gate — run tests and build, review the diff with the built-in /code-review, /simplify and /security-review, verify the running app, then commit and open a PR.
-disable-model-invocation: true
+description: Use when the user says the work is done, ready to merge, "ship it", or asks for a PR: run tests/build, /code-review, /simplify, /security-review where relevant, check the running app, then commit and open a PR.
 argument-hint: "[base-branch]"
 ---
 

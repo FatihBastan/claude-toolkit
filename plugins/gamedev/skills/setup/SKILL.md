@@ -1,7 +1,6 @@
 ---
 name: setup
-description: Wire a game repo to the upstream gamedev skills (router + the right engine bundle) and, optionally, the Unity or Godot editor MCP server. Called by /core:init-repo; run it directly to add or change engines later.
-disable-model-invocation: true
+description: Use when a game repo needs the gamedev skills wired up, or the user adds or changes an engine: enables the upstream router + engine bundle and optionally the Unity or Godot editor MCP. Also called by init-repo.
 argument-hint: "[portable|plugin] [engine]"
 ---
 

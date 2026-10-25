@@ -1,15 +1,14 @@
 ---
 name: build
-description: Implement the next task from tasks/plan.md in a thin, test-first slice — or every task with "auto" after one approval. Each slice is tested, verified and committed on its own.
-disable-model-invocation: true
+description: Use when an approved tasks/plan.md exists and the user wants it implemented ("go", "build it", "next task", "do the whole plan"): thin test-first slices, each verified and committed. Not for compiling or running the project's build.
 argument-hint: "[auto]"
 ---
 
 # build
 
-Mode: `$ARGUMENTS` — `auto` (or `all`) runs the whole plan; anything else implements the next pending task, then stops.
+Mode: `$ARGUMENTS` — `auto` / `all`, or the user asking for the whole plan, runs every task; otherwise implement the next pending task, then stop.
 
-Needs `tasks/plan.md` (from `/spec`). No plan? For a small, clear task, make a 2–4 line plan inline and confirm it. For anything bigger, tell the user to run `/spec` first — don't invent requirements.
+Needs `tasks/plan.md` (from `/spec`). No plan? For a small, clear task, make a 2–4 line plan inline and confirm it. For anything bigger, use the spec skill first — don't invent requirements.
 
 ## One slice
 1. Read the task's acceptance criteria and only the code it touches. Explore subagent for anything wider.
@@ -30,6 +29,6 @@ Build broke and the fix isn't obvious → `build-error-resolver` agent. A behavi
 3. No `tasks/plan.md` yet → draft it, show it, and wait for a clear "go". Hedged answers ("looks ok I guess") aren't approval. Commit the plan on its own.
 4. Run every task in dependency order with the full slice loop above — one commit per task, so any point is a clean rollback.
 5. **Stop and ask** (don't push through) when: a test can't be made to pass; the spec is ambiguous or silent on a decision; or a task is risky or irreversible (auth/permissions, destructive migrations, payments, deletes, deploys, secrets). The user re-runs `/build auto` to resume.
-6. Finish with: tasks done, tests added, commits made, anything skipped or flagged. Then suggest `/ship`.
+6. Finish with: tasks done, tests added, commits made, anything skipped or flagged. Then offer to ship it (the ship skill).
 
 *Adapted from addyosmani/agent-skills `incremental-implementation` and its `/build` command (MIT).*
