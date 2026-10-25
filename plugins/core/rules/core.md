@@ -24,6 +24,7 @@ Always loaded. Kept short on purpose — every line here costs context in every 
 ## Context hygiene
 - Big files: ranged reads (offset/limit), not whole-file reads.
 - Skip generated, vendored and binary paths (see CLAUDE.md "Don't read"; hard blocks live in `.claude/settings.json`).
+- Web research that needs several searches or pages → the `web-researcher` agent, which returns a cited summary. One known URL → fetch it directly.
 - Long or noisy work (big refactors, wide research) goes to a subagent; the main thread keeps the decisions.
 
 ## Git

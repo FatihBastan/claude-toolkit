@@ -31,7 +31,7 @@ You don't have to remember this: in a repo that isn't set up yet, a session-star
 
 | Plugin | Enabled | Contents | Always-on cost* |
 |---|---|---|---|
-| `core` | everywhere | `/core:init-repo` `/core:spec` `/core:build` `/core:ship` `/core:interview` `/core:token-budget` · skills `tdd`, `bug-hunt`, `source-driven` · agents `build-error-resolver`, `silent-failure-hunter` | ~1.0k tok |
+| `core` | everywhere | `/core:init-repo` `/core:spec` `/core:build` `/core:ship` `/core:interview` `/core:token-budget` · skills `tdd`, `bug-hunt`, `source-driven` · agents `build-error-resolver`, `silent-failure-hunter`, `web-researcher` | ~1.0k tok |
 | `gamedev` | game repos | `/gamedev:setup` → upstream [gamedev skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) (router + engine bundle) and optional Unity/Godot editor MCP | ~0.1k + upstream bundles (router 0.3k + Unity 1.2k; disciplines +2.6k) |
 | `web3d` | three.js / R3F repos | `web3d-stack`: drei, Rapier, postprocessing, three.quarks, Yuka, Colyseus + frame-budget rules | ~0.1k |
 | `web` | Next.js repos | `nextjs-feature` | ~0.1k |
