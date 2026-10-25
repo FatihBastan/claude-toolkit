@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/*.fbx)",
+      "Read(./**/*.blend)",
+      "Read(./**/*.blend1)",
+      "Read(./**/*.glb)",
+      "Read(./**/*.psd)",
+      "Read(./**/*.wav)",
+      "Read(./**/*.ogg)",
+      "Read(./**/*.mp3)",
+      "Read(./**/*.ktx2)",
+      "Read(./**/*.hdr)",
+      "Read(./**/*.exr)"
+    ]
+  }
+}

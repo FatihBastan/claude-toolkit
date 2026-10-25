@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./Binaries/**)",
+      "Read(./Intermediate/**)",
+      "Read(./Saved/**)",
+      "Read(./DerivedDataCache/**)",
+      "Read(./**/*.uasset)",
+      "Read(./**/*.umap)"
+    ]
+  }
+}
