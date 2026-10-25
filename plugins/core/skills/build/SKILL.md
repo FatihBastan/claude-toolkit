@@ -16,7 +16,7 @@ Needs `tasks/plan.md` (from `/spec`). No plan? For a small, clear task, make a 2
 2. **Red:** write a failing test for the behaviour and run it. It must fail for the right reason (feature missing — not a typo or an import error).
 3. **Green:** write the minimum code to pass. No extras, no "while I'm here".
 4. Run the full relevant test suite and the build / type-check. Fix only what your change broke.
-5. **Verify** beyond tests when behaviour is visible: UI, gameplay, CLI output → `/verify`, dev server, emulator or editor. If you can't verify, say exactly why.
+5. **Verify** beyond tests when behaviour is visible: UI, gameplay, CLI output → run it (dev server + browser, emulator, editor, a smoke script) and look. If you can't, say exactly why and suggest the user run `/verify`.
 6. Refactor if needed, tests still green.
 7. Commit just this task's files (`git add <paths>`, never `-A`) with a clear message, and tick the task off in `tasks/plan.md`.
 

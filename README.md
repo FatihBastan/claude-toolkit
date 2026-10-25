@@ -30,7 +30,7 @@ Then in `/plugin` → Marketplaces → `fatih-toolkit` → **Enable auto-update*
 | Plugin | Enabled | Contents | Always-on cost* |
 |---|---|---|---|
 | `core` | everywhere | `/core:init-repo` `/core:spec` `/core:build` `/core:ship` `/core:interview` `/core:token-budget` · skills `tdd`, `bug-hunt`, `source-driven` · agents `build-error-resolver`, `silent-failure-hunter` | ~0.9k tok (less in practice — the six commands are user-only) |
-| `gamedev` | game repos | `/gamedev:setup` → upstream [gamedev skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) (router + engine bundle) and optional Unity/Godot editor MCP | ~0.1k + chosen bundles (Unity ≈ 0.9k, + disciplines ≈ 1.6k) |
+| `gamedev` | game repos | `/gamedev:setup` → upstream [gamedev skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) (router + engine bundle) and optional Unity/Godot editor MCP | ~0.1k + upstream bundles (router 0.3k + Unity 1.2k; disciplines +2.6k) |
 | `web3d` | three.js / R3F repos | `web3d-stack`: drei, Rapier, postprocessing, three.quarks, Yuka, Colyseus + frame-budget rules | ~0.1k |
 | `web` | Next.js repos | `nextjs-feature` | ~0.1k |
 | `mobile` | Flutter repos | `flutter-screen` | ~0.1k |
@@ -39,7 +39,7 @@ Then in `/plugin` → Marketplaces → `fatih-toolkit` → **Enable auto-update*
 
 \*From `claude plugin details`: descriptions loaded in every session. Bodies load only when used. Packs are `defaultEnabled: false` — they only turn on where a repo's settings enable them.
 
-Install a single pack by hand: `/plugin install web3d --marketplace FatihBastan/claude-toolkit`.
+Turn a pack on in one repo by hand: add `"web3d@fatih-toolkit": true` under `enabledPlugins` in that repo's `.claude/settings.json` (packs install disabled; `/plugin install web3d --marketplace FatihBastan/claude-toolkit` just makes one available).
 
 ### The feature workflow
 `/core:interview` (vague idea) → `/core:spec` (SPEC.md + tasks/plan.md, stops for approval) → `/core:build` or `/core:build auto` (test-first slices, one commit each) → `/core:ship` (tests, `/code-review`, `/simplify`, `/security-review`, `/verify`, PR).

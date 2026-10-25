@@ -33,7 +33,7 @@ Don't add a library the task doesn't need. Each one costs bundle size and frame 
 - Measure before optimizing: `r3f-perf` or `stats.js`, and the browser performance panel.
 
 ## Verify
-Run the dev server and look at it in a browser (`/verify`, or the in-app browser). Check: the scene renders, input works, there are no console errors, and the frame time holds on a throttled CPU. Type-checks say nothing about frame rate.
+Run the dev server and look at it in a browser (a browser tool if you have one; otherwise ask the user, or suggest `/verify`). Check: the scene renders, input works, there are no console errors, and the frame time holds on a throttled CPU. Type-checks say nothing about frame rate.
 
 ## Licenses
 All MIT: three, R3F, drei, Rapier bindings, postprocessing, three.quarks, Yuka, Colyseus.

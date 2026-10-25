@@ -23,7 +23,7 @@ Ship a Next.js feature with the full loop: code → types → test → type-chec
 
 5. **Type-check.** `npx tsc --noEmit`. Fix any errors caused by your changes. Don't fix unrelated errors.
 
-6. **Run it and verify in a browser** — `/verify`, or `npm run dev` plus the browser. Check the golden path and 1–2 obvious edge cases. Do not report the task as done if you couldn't actually use the feature in a browser. Say so explicitly instead.
+6. **Run it and verify in a browser** — `npm run dev` plus a browser tool (or ask the user to run `/verify`). Check the golden path and 1–2 obvious edge cases. Do not report the task as done if you couldn't actually use the feature in a browser. Say so explicitly instead.
 
 7. **Report** in 5 lines:
    - Files added/changed (paths)

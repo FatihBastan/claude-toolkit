@@ -11,19 +11,28 @@ Upstream: [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamed
 
 ## 1. Engine → bundle
 
-| Detected | Bundle(s) | Always-on cost* |
+| Detected | Bundle | Always-on cost* |
 |---|---|---|
-| `project.godot` | `godot` | ~1.6k tok |
-| `Assets/` + `ProjectSettings/` | `unity` | ~0.7k |
-| `*.uproject` | `unreal` | ~0.6k |
-| `package.json` with `phaser` / `pixi.js` / `three` | `web-engines` | ~0.7k |
-| `go.mod` with ebiten | `ebitengine` | ~0.1k |
-| Bevy, pygame, LÖVE, Defold, Roblox | `other-engines` | ~1.2k |
+| `project.godot` | `godot` | ~2.6k tok |
+| `Assets/` + `ProjectSettings/` | `unity` | ~1.2k |
+| `*.uproject` | `unreal` | ~1.0k |
+| `package.json` with `phaser` / `pixi.js` / `three` | `web-engines` | ~1.1k |
+| `go.mod` with ebiten | `ebitengine` | ~0.2k |
+| Bevy, pygame, LÖVE, Defold, Roblox | `other-engines` | ~1.9k |
 
-Always add `router` (~0.2k). Default extra: `disciplines` (~1.6k — game feel, cameras, input, saves, AI, procedural gen, shaders, UI/UX, performance). Offer `genres` (~0.4k) when the genre is known, and `workflows` (~0.3k) for game jams or Steam/itch publishing.
-*Skill-description tokens loaded every session; skill bodies load only when used.
+Always add `router` (~0.3k). Default extra: `disciplines` (~2.6k — game feel, cameras, input, saves, AI, procedural gen, shaders, UI/UX, performance); skip it for small prototypes. Offer `genres` (~0.7k) when the genre is known, and `workflows` (~0.4k) for game jams or Steam/itch publishing.
+*Measured with `claude plugin details`: description tokens loaded in every session where the bundle is on. Skill bodies load only when used.
 
-## 2a. Plugin mode → merge into `.claude/settings.json`
+## 2a. Plugin mode
+With the `claude` CLI on PATH (writes `.claude/settings.json` for you):
+```bash
+claude plugin marketplace add gamedev-skills/awesome-gamedev-agent-skills --scope project
+claude plugin install router@awesome-gamedev-agent-skills --scope project
+claude plugin install <engine-bundle>@awesome-gamedev-agent-skills --scope project
+claude plugin install disciplines@awesome-gamedev-agent-skills --scope project
+```
+Then add `"autoUpdate": true` to the marketplace entry it wrote, so upstream fixes arrive on their own.
+Without the CLI, merge this into `.claude/settings.json` by hand:
 ```json
 "extraKnownMarketplaces": {
   "awesome-gamedev-agent-skills": {

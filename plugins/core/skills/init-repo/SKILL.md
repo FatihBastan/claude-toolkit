@@ -91,7 +91,7 @@ Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescrip
   - gamedev → follow `CORE/packs/gamedev/skills/setup/SKILL.md` in portable mode.
 - Use `cp -RL` (the packs are symlinks in a clone). A first run never overwrites a file that already exists and differs — ask. On `refresh`, toolkit-owned copies (the skills, agents and rules listed here) are updated in place; list what changed.
 
-**Plugin** — list the packs under `enabledPlugins` (step 3); copy nothing. For gamedev, still follow `CORE/packs/gamedev/skills/setup/SKILL.md`, which adds the upstream gamedev marketplace.
+**Plugin** — copy nothing. If the `claude` CLI is on PATH, run `claude plugin install <pack>@fatih-toolkit --scope project` for each pack: it writes the `enabledPlugins` entry and fetches the plugin. Without the CLI, the `enabledPlugins` entries from step 3 are enough — relative-path plugins load from the marketplace without an install step. For gamedev, still follow `CORE/packs/gamedev/skills/setup/SKILL.md`, which adds the upstream gamedev marketplace.
 
 **Session logging (only if the user said yes):**
 - `mkdir -p notes/daily`, and suggest adding `notes/daily/` to `.gitignore` (personal noise).
