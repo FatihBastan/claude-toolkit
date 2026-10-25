@@ -1,0 +1,96 @@
+{
+  "name": "fatih-toolkit",
+  "description": "Fatih's Claude Code setup: a lean always-on core plus opt-in stack packs.",
+  "owner": {
+    "name": "Fatih Baştan",
+    "url": "https://github.com/FatihBastan"
+  },
+  "plugins": [
+    {
+      "name": "core",
+      "source": "./plugins/core",
+      "description": "Always-on core: /core:init-repo, /core:spec, /core:build, /core:ship, /core:interview, /core:token-budget; tdd, bug-hunt and source-driven skills; build-error-resolver and silent-failure-hunter agents.",
+      "category": "development",
+      "keywords": [
+        "workflow",
+        "tdd",
+        "spec",
+        "setup"
+      ]
+    },
+    {
+      "name": "gamedev",
+      "source": "./plugins/gamedev",
+      "description": "Game repos: /gamedev:setup wires the upstream gamedev skills (router + engine bundle) and optional Unity/Godot editor MCP.",
+      "category": "development",
+      "keywords": [
+        "gamedev",
+        "unity",
+        "godot",
+        "unreal"
+      ],
+      "defaultEnabled": false
+    },
+    {
+      "name": "web3d",
+      "source": "./plugins/web3d",
+      "description": "Browser 3D games: web3d-stack skill (R3F, drei, Rapier, postprocessing, three.quarks, Yuka, Colyseus) with frame-budget rules.",
+      "category": "development",
+      "keywords": [
+        "threejs",
+        "react-three-fiber",
+        "webgl",
+        "gamedev"
+      ],
+      "defaultEnabled": false
+    },
+    {
+      "name": "web",
+      "source": "./plugins/web",
+      "description": "Next.js + TypeScript apps: nextjs-feature skill.",
+      "category": "development",
+      "keywords": [
+        "nextjs",
+        "react",
+        "typescript"
+      ],
+      "defaultEnabled": false
+    },
+    {
+      "name": "mobile",
+      "source": "./plugins/mobile",
+      "description": "Flutter apps: flutter-screen skill.",
+      "category": "development",
+      "keywords": [
+        "flutter",
+        "dart",
+        "mobile"
+      ],
+      "defaultEnabled": false
+    },
+    {
+      "name": "ml",
+      "source": "./plugins/ml",
+      "description": "PyTorch / research repos: ml-paper-repro skill, pytorch-build-resolver and ml-reviewer agents.",
+      "category": "development",
+      "keywords": [
+        "pytorch",
+        "machine-learning",
+        "research"
+      ],
+      "defaultEnabled": false
+    },
+    {
+      "name": "session-log",
+      "source": "./plugins/session-log",
+      "description": "Per-project handoff notes in notes/daily/ with resume-on-start and log-before-stop hooks. No-op unless notes/daily/ exists.",
+      "category": "productivity",
+      "keywords": [
+        "notes",
+        "handoff",
+        "hooks"
+      ],
+      "defaultEnabled": false
+    }
+  ]
+}

@@ -1,47 +1,73 @@
 # claude-toolkit
 
-Personal Claude Code toolkit. Templates, skills, and bootstrap instructions so a fresh Claude session in any of my projects gets up to speed in seconds — without reading half the repo and burning input tokens.
+My Claude Code setup, packaged so every repo starts with the same good defaults: a lean always-on **core**, opt-in **packs** per stack, and one command — `/core:init-repo` — that wires a repo up.
 
-## How I use this
+Design rules: one skill per job, nothing that Claude Code already does built in, and as little always-on context as possible.
 
-At the start of any new project (or when I want to re-init Claude in an existing one), I tell Claude:
+## Quick start
 
-> My toolkit is at `github.com/FatihBastan/claude-toolkit`. Clone it to `/tmp/claude-toolkit` if it isn't there, then follow `INIT.md` for this project.
+**Once per machine** (local CLI / desktop):
+```bash
+scripts/install.sh
+# or by hand:
+claude plugin marketplace add FatihBastan/claude-toolkit
+claude plugin install core@fatih-toolkit
+claude plugin enable cc-plugin-you-should-know@builtin
+```
+Then in `/plugin` → Marketplaces → `fatih-toolkit` → **Enable auto-update**, so pushes to this repo reach every machine.
 
-Claude will:
-1. Clone the toolkit (or `git pull` if already there).
-2. Read `INIT.md`.
-3. Detect the project type by inspecting a handful of files.
-4. Pick the right `CLAUDE.md` template, fill it in, write it to the project root.
-5. Append project-specific "don't read" rules.
-6. Suggest which skills from `skills/` to install globally.
+**Once per repo:** run `/core:init-repo` in the repo. It detects the stack and writes:
+- `CLAUDE.md` — a ≤ 80-line map from the matching template
+- `.claude/settings.json` — deny rules for secrets/binaries/build output, plus the right packs
+- `.claude/rules/` — `core.md` plus path-scoped language rules
+- in **portable** mode, copies of the skills and agents, so the repo also works in cloud sessions
+
+**Cloud sessions** (claude.ai/code, phone) don't load plugins. Paste this instead:
+> My toolkit is github.com/FatihBastan/claude-toolkit. Clone it to /tmp/claude-toolkit (or pull if it's there) and follow its INIT.md for this repo.
+
+## What's inside
+
+| Plugin | Enabled | Contents | Always-on cost* |
+|---|---|---|---|
+| `core` | everywhere | `/core:init-repo` `/core:spec` `/core:build` `/core:ship` `/core:interview` `/core:token-budget` · skills `tdd`, `bug-hunt`, `source-driven` · agents `build-error-resolver`, `silent-failure-hunter` | ~0.9k tok (less in practice — the six commands are user-only) |
+| `gamedev` | game repos | `/gamedev:setup` → upstream [gamedev skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) (router + engine bundle) and optional Unity/Godot editor MCP | ~0.1k + upstream bundles (router 0.3k + Unity 1.2k; disciplines +2.6k) |
+| `web3d` | three.js / R3F repos | `web3d-stack`: drei, Rapier, postprocessing, three.quarks, Yuka, Colyseus + frame-budget rules | ~0.1k |
+| `web` | Next.js repos | `nextjs-feature` | ~0.1k |
+| `mobile` | Flutter repos | `flutter-screen` | ~0.1k |
+| `ml` | PyTorch / research repos | `ml-paper-repro` · agents `pytorch-build-resolver`, `ml-reviewer` | ~0.3k |
+| `session-log` | long projects, opt-in | `notes/daily/` handoff notes + resume/log hooks | ~0.1k |
+
+\*From `claude plugin details`: descriptions loaded in every session. Bodies load only when used. Packs are `defaultEnabled: false` — they only turn on where a repo's settings enable them.
+
+Turn a pack on in one repo by hand: add `"web3d@fatih-toolkit": true` under `enabledPlugins` in that repo's `.claude/settings.json` (packs install disabled; `/plugin install web3d --marketplace FatihBastan/claude-toolkit` just makes one available).
+
+### The feature workflow
+`/core:interview` (vague idea) → `/core:spec` (SPEC.md + tasks/plan.md, stops for approval) → `/core:build` or `/core:build auto` (test-first slices, one commit each) → `/core:ship` (tests, `/code-review`, `/simplify`, `/security-review`, `/verify`, PR).
+
+### Built into Claude Code — deliberately not duplicated
+`/code-review` (bugs, multi-agent) · `/simplify` (cleanup) · `/security-review` · `/verify` + `/run-skill-generator` · plan mode / `/plan` · auto memory (`/memory`) · `/batch` (wide parallel changes) · `/fewer-permission-prompts` · `/context` · the built-in **You Should Know** plugin.
 
 ## Layout
-
-| Path | What it is |
-|---|---|
-| [INIT.md](INIT.md) | Instructions Claude follows to init a project from this toolkit. |
-| [templates/](templates/) | `CLAUDE.md` skeletons for the project types I work in, plus a generic don't-read list. |
-| [skills/](skills/) | Custom skills I can install into `~/.claude/skills/` for global use. |
-| [hooks/](hooks/) | Per-project shell hooks that make the `session-log` skill deterministic (auto-resume + stop-nudge). |
-| [tips.md](tips.md) | My notes on token-efficient habits with Claude (Explore agent, ranged reads, etc.). |
-
-## Installing skills globally
-
-```bash
-# All of them:
-cp -r ~/claude-toolkit/skills/* ~/.claude/skills/
-
-# Or pick one:
-cp -r ~/claude-toolkit/skills/tight-claude-md ~/.claude/skills/
+```
+.claude-plugin/marketplace.json   the catalog (marketplace "fatih-toolkit")
+plugins/
+  core/
+    skills/  agents/              always-on workflow
+    rules/                        copied to <repo>/.claude/rules/ by init-repo
+    templates/claude-md/          CLAUDE.md per stack
+    templates/settings/           permissions.deny fragments per stack
+    packs/ → ../<pack>            symlinks so init-repo can copy pack files (dereferenced in the plugin cache)
+  gamedev/ web3d/ web/ mobile/ ml/ session-log/
+INIT.md                           no-plugin entry point (cloud sessions)
+NOTICE.md                         credits and licenses
+tips.md                           the habits behind the rules
+scripts/install.sh, validate.sh
 ```
 
-After copying, restart Claude Code or open a fresh session — they'll show up in the skills list.
+## Changing things
+- Edit a skill → `scripts/validate.sh` → push. With auto-update on, machines pick it up; run `/reload-plugins` in an open session.
+- Re-sync a repo after toolkit changes: `/core:init-repo refresh`.
+- New skill: put it in the plugin it belongs to; keep the description short and specific. Workflow commands get `disable-model-invocation: true`.
+- Check cost: `claude plugin details core@fatih-toolkit`.
 
-## Updating
-
-```bash
-cd ~/claude-toolkit && git pull
-```
-
-When I learn a new pattern that saves tokens or improves Claude's accuracy on my projects, I add it here.
+Credits: [NOTICE.md](NOTICE.md).

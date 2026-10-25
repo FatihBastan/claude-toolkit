@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/*.pt)",
+      "Read(./**/*.pth)",
+      "Read(./**/*.ckpt)",
+      "Read(./**/*.safetensors)",
+      "Read(./**/*.onnx)",
+      "Read(./**/*.engine)",
+      "Read(./**/*.trt)",
+      "Read(./**/*.h5)",
+      "Read(./**/*.pkl)",
+      "Read(./**/*.npy)",
+      "Read(./**/*.npz)",
+      "Read(./**/*.parquet)",
+      "Read(./**/*.arrow)",
+      "Read(./**/*.feather)",
+      "Read(./**/*.tfrecord)",
+      "Read(./**/wandb/**)",
+      "Read(./**/mlruns/**)",
+      "Read(./**/lightning_logs/**)",
+      "Read(./**/checkpoints/**)"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/.next/**)",
+      "Read(./**/.nuxt/**)",
+      "Read(./**/.turbo/**)",
+      "Read(./**/.vercel/**)",
+      "Read(./**/coverage/**)",
+      "Read(./**/*.tsbuildinfo)",
+      "Read(./**/*.min.js)",
+      "Read(./**/*.min.css)",
+      "Read(./**/*.map)"
+    ]
+  }
+}

@@ -1,73 +1,34 @@
-# Token-efficient habits with Claude Code
+# Habits that keep Claude accurate and cheap
 
-Things I've learned that save input tokens without dropping accuracy. The CLAUDE.md template encodes most of these implicitly — this file is the "why" behind the rules.
+The "why" behind the toolkit. Most of it is already encoded in `plugins/core/rules/core.md` and the CLAUDE.md templates.
 
-## 1. The Explore subagent is the single biggest win
+## 1. Always-on context is the budget that matters
+Everything in CLAUDE.md, every rule without `paths:`, and every enabled skill or agent description is paid for in **every** session. Skill and agent *bodies* load only when used.
+- Keep CLAUDE.md under ~80 lines: a map, not documentation.
+- Path-scope language rules (`paths:` frontmatter) so the Python rules only load when Claude touches `.py` files.
+- Make workflow commands user-only (`disable-model-invocation: true`) so their descriptions stay out of context.
+- Enable stack packs per repo, not globally. `claude plugin details <plugin>` shows the projected cost; `/context` shows what's actually loaded.
 
-For any "where is X / how is Y wired / which files reference Z" question, ask Claude to **spawn the Explore subagent**.
+## 2. Explore subagent for searching
+"Where is X / how is Y wired / what references Z" → have the **Explore** subagent do it. It greps and reads in its own context and returns a summary. Not for code review or cross-file consistency checks — it reads excerpts.
 
-What it does: runs grep/find/read in its own isolated context window, returns a short summary. Your main session never sees the raw output.
+## 3. Plan first, then build in thin slices
+For anything non-trivial: approach + files → approval → one slice at a time with tests (`/spec` → `/build`). The most expensive failure is a big build of the wrong thing.
 
-When to use it:
-- "Find every place we call the auth API"
-- "Map the data flow from upload to transcription"
-- "Which components use the `useToneFlowStore` hook?"
+## 4. Give Claude a way to check its work
+Tests, a type-check, a screenshot, or `/verify` (run `/run-skill-generator` once per repo so it knows how to launch the app). With feedback Claude iterates to a much better result; without it, it guesses.
 
-When **not** to use it:
-- Code review — Explore reads excerpts, will miss content past its window
-- Cross-file consistency checks
-- Open-ended "tell me about this codebase" — too vague, will dump too much back
+## 5. Hard blocks beat polite requests
+A "Don't read" line in CLAUDE.md is a suggestion. `permissions.deny` in `.claude/settings.json` is enforced — use it for secrets, binaries and build output. Keep soft skips for things Claude sometimes genuinely needs (`node_modules/` types, lockfile versions, Unity `.meta` GUIDs).
 
-How to invoke:
-- *"Use the Explore subagent to find …"*
-- *"Spawn Explore on `backend/`, look for …"*
+## 6. Use what's built in
+Don't rebuild what Claude Code already ships: `/code-review` (bugs), `/simplify` (cleanup), `/security-review`, `/verify`, plan mode, auto memory (`/memory`), `/batch` for wide parallel changes, `/fewer-permission-prompts`, `/context`.
 
-## 2. Hand-write CLAUDE.md, don't `/init`
+## 7. Ranged reads on big files
+When you only need lines 200–280, read with offset/limit. Note very large files in CLAUDE.md.
 
-`/init` produces a verbose, generic CLAUDE.md that often doubles as documentation. That's not what you want — you want a **map**, not docs.
+## 8. Don't paste long output back
+Have Claude run the command so the output is captured once, or paste only the ~10 relevant lines.
 
-A good CLAUDE.md:
-- Under 80 lines
-- Stack + map + commands + 2–3 conventions + don't-read list
-- Says "for X type of question, use Explore"
-
-A bad CLAUDE.md:
-- Reproduces the README
-- Lists every npm script
-- Explains what TypeScript is
-
-The toolkit's INIT.md is built around this principle.
-
-## 3. Ranged reads on big files
-
-When you know you only need lines 200–280, ask Claude to read with offset/limit instead of slurping the whole file. Note in CLAUDE.md which files are large enough to warrant this — usually anything over ~800 lines.
-
-## 4. Don't-read list does heavy lifting
-
-Every project has dirs that *exist* but should never be read. They burn input tokens for zero accuracy gain:
-- `node_modules/`, `.venv/`, `.next/`, `dist/` — always
-- Lockfiles — read once if dep versions matter, then never again
-- Generated `*.g.dart`, `*.freezed.dart`, `tsconfig.tsbuildinfo`
-- Model weights, datasets, raw images
-
-Put them in CLAUDE.md's `## Don't read` section. See `templates/dont-read.md` for ready-made lists per stack.
-
-## 5. Secrets get `.claude/settings.json` deny rules, not just CLAUDE.md
-
-CLAUDE.md is a *suggestion* — Claude can still be asked to read those paths. For real enforcement (env files, credentials), use `permissions.deny` in `.claude/settings.json`. See `templates/dont-read.md` for the format.
-
-## 6. Don't paste long output back
-
-When a tool produces a 500-line log, don't paste the whole thing into the chat asking "what's wrong?". Either:
-- Run the command via Claude so the output is captured once and never re-sent.
-- Or grep the relevant ~10 lines and paste those.
-
-The second one is what you'd do with a colleague. Same here.
-
-## 7. Long-running work in subagents
-
-For anything that'll take a lot of reads/writes (paper repro, big refactor, cross-service feature), spawn a subagent rather than doing it inline. The subagent's context isolation means your main session doesn't accumulate the noise. You get back a clean summary, can ask follow-ups, and your main context stays usable for hours instead of minutes.
-
-## 8. Fresh sessions for unrelated tasks
-
-If you've been deep in feature A for an hour, then want to look at unrelated bug B — start a new session. Carrying feature-A context into bug-B work is pure tax with no benefit. Memory + CLAUDE.md handle continuity for the things that matter.
+## 9. Fresh sessions for unrelated work
+Carrying feature A's context into bug B is pure tax. CLAUDE.md, rules and auto memory carry what matters across sessions.
