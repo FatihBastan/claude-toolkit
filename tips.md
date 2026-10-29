@@ -6,7 +6,7 @@ The "why" behind the toolkit. Most of it is already encoded in `plugins/core/rul
 Everything in CLAUDE.md, every rule without `paths:`, and every enabled skill or agent description is paid for in **every** session. Skill and agent *bodies* load only when used.
 - Keep CLAUDE.md under ~80 lines: a map, not documentation.
 - Path-scope language rules (`paths:` frontmatter) so the Python rules only load when Claude touches `.py` files.
-- Make workflow commands user-only (`disable-model-invocation: true`) so their descriptions stay out of context.
+- Write skill descriptions as "Use when … / Not for …" so they fire at the right time and nowhere else. Make a skill user-only (`disable-model-invocation: true`) only if it must never fire on its own.
 - Enable stack packs per repo, not globally. `claude plugin details <plugin>` shows the projected cost; `/context` shows what's actually loaded.
 
 ## 2. Explore subagent for searching

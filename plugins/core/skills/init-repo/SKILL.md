@@ -1,7 +1,6 @@
 ---
 name: init-repo
-description: Set up the current repo from Fatih's toolkit — CLAUDE.md, .claude/settings.json, path-scoped rules, and the right stack packs. Run once per repo; run with "refresh" to re-sync later.
-disable-model-invocation: true
+description: Use when the user asks to set up, configure or refresh a repo for Claude, or agrees to it after a session-start note says the repo isn't set up: writes CLAUDE.md, .claude/settings.json, path-scoped rules and the right stack packs.
 argument-hint: "[refresh] [portable|plugin]"
 ---
 

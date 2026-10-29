@@ -9,7 +9,7 @@
     {
       "name": "core",
       "source": "./plugins/core",
-      "description": "Always-on core: /core:init-repo, /core:spec, /core:build, /core:ship, /core:interview, /core:token-budget; tdd, bug-hunt and source-driven skills; build-error-resolver and silent-failure-hunter agents.",
+      "description": "Always-on core: /core:init-repo, /core:spec, /core:build, /core:ship, /core:interview, /core:token-budget; tdd, bug-hunt and source-driven skills; build-error-resolver, silent-failure-hunter and web-researcher agents.",
       "category": "development",
       "keywords": [
         "workflow",

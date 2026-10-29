@@ -1,17 +1,16 @@
 ---
 name: spec
-description: Write a spec and an ordered task plan before coding a feature — surface assumptions, define testable success criteria, slice the work vertically, then stop for approval.
-disable-model-invocation: true
+description: Use before coding a new feature or significant change that spans several files or has unclear requirements: surface assumptions, write SPEC.md and an ordered tasks/plan.md with testable criteria, then stop for approval. Not for small fixes or one-file changes.
 argument-hint: "<feature or idea>"
 ---
 
 # spec
 
-Feature: $ARGUMENTS
+Feature: $ARGUMENTS (if empty, the feature being discussed)
 
 Code without a spec is guessing. This produces `SPEC.md` (what and why) and `tasks/plan.md` (how, in order), then **stops** for the user's approval. `/build` executes it.
 
-If the ask is vague (no clear who, why, success criterion or constraint), run `/interview` first, or ask the 1–3 questions that matter most, each with your best guess attached.
+If the ask is vague (no clear who, why, success criterion or constraint), use the interview skill first, or ask the 1–3 questions that matter most, each with your best guess attached.
 
 ## 1. Assumptions first
 Before writing anything, list what you're assuming and invite correction:
@@ -52,7 +51,7 @@ Files:      src/…, tests/…
 ```
 
 ## 4. Stop
-Summarize the spec in ≤ 5 lines, list the open questions, and ask for approval. **End your turn.** No code, no scaffolding, no "quick start" on task 1. Implementation starts with `/build` after the user approves.
+Summarize the spec in ≤ 5 lines, list the open questions, and ask for approval. **End your turn.** No code, no scaffolding, no "quick start" on task 1. Implementation starts with the build skill after the user approves.
 
 Keep the spec alive: when a decision changes during the build, update `SPEC.md` first, then the code.
 
