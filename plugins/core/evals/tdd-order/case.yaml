@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: tdd-order
+description: A new function in a repo with a test runner should be built test-first — the test is written and run before the implementation.
+tags: [tdd]
+context:
+  scaffold_script: scaffold.sh

@@ -51,6 +51,9 @@ Claude picks these up by itself from what you say ("let's add X" → spec, "go" 
 ### Built into Claude Code — deliberately not duplicated
 `/code-review` (bugs, multi-agent) · `/simplify` (cleanup) · `/security-review` · `/verify` + `/run-skill-generator` · plan mode / `/plan` · auto memory (`/memory`) · `/batch` (wide parallel changes) · `/fewer-permission-prompts` · `/context` · the built-in **You Should Know** plugin.
 
+## Does it help? (evals)
+`plugins/core/evals/` holds a `claude plugin eval` suite that runs each case with and without the plugin. Latest results ([RESULTS.md](plugins/core/evals/RESULTS.md)): on Sonnet 5.5 the plugin adds **+0.37** on average (spec +0.89, interview +0.67, tdd +0.44, bug-hunt +0.33) and **+0.21** on Opus, with no over-triggering on the guard cases. The key ingredient is the **Skill routing** section in `rules/core.md`, which the core plugin's SessionStart hook also injects in repos that aren't set up yet.
+
 ## Layout
 ```
 .claude-plugin/marketplace.json   the catalog (marketplace "fatih-toolkit")

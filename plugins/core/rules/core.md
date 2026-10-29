@@ -14,6 +14,19 @@ Always loaded. Kept short on purpose — every line here costs context in every 
 - If a requirement is ambiguous, ask one sharp question with your best guess attached (the interview skill when the whole ask is vague).
 - Prefer Claude Code's built-ins (`/code-review`, `/simplify`, `/security-review`, plan mode) and the installed skills and agents over improvising your own process.
 
+## Skill routing
+When a row matches, your **first** action is the Skill tool call for it — before reading code or planning. This holds however small the codebase looks; the skills keep small tasks short. Don't improvise the process from memory. With the plugin the names are prefixed (`core:spec`).
+- A new feature (more than one behaviour, or more than one file), or unclear requirements → **spec** first. No code until the user approves the plan.
+- Too vague to build well (no clear who / why / success / constraint — "make me a game") → **interview**: one question at a time, each with your best guess. Don't build yet.
+- An approved plan exists and the user says go → **build**.
+- Bug, failing test, or behaviour that differs from intent → **bug-hunt** (root cause first, ends with a regression test).
+- New behaviour in a repo that has a test runner → **tdd**: write and run the failing test before the code.
+- Version-sensitive library or framework code → **source-driven**.
+- Research that needs several searches or pages → the **web-researcher** agent. A quick lookup → built-in WebSearch / WebFetch.
+- Build or type errors that aren't a one-line fix → the **build-error-resolver** agent.
+- "Done", "ready to merge", "make a PR" → **ship**.
+- Trivial, clearly scoped edits (a rename, a typo, a one-line fix) → just do them. No skill.
+
 ## Code
 - Simplest thing that works; no speculative abstraction. Clarity over cleverness.
 - Validate at boundaries (user input, network, files, env); trust internal code.

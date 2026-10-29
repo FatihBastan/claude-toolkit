@@ -7,9 +7,10 @@ CLAUDE_BIN="${CLAUDE_BIN:-claude}"
 fail=0
 
 echo "▸ marketplace + plugins"
-"$CLAUDE_BIN" plugin validate . --strict >/dev/null || { echo "  ✗ marketplace"; fail=1; }
+"$CLAUDE_BIN" plugin validate . >/dev/null || { echo "  ✗ marketplace"; fail=1; }
+# Plugins: errors fail, warnings are fine (no "version" on purpose — omitting it lets machines track commits).
 for p in plugins/*/; do
-  "$CLAUDE_BIN" plugin validate "$p" --strict >/dev/null || { echo "  ✗ $p"; fail=1; }
+  "$CLAUDE_BIN" plugin validate "$p" >/dev/null || { echo "  ✗ $p"; fail=1; }
 done
 
 echo "▸ settings fragments are valid JSON"
