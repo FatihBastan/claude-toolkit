@@ -33,6 +33,7 @@ Mean Δ **+0.21**. $5.25 at list price.
 The same off-by-one fix next to ugly-but-working code, with and without the rest of `core.md` in the system prompt. **Both scored 1.00** (fixed, nothing else touched, verification reported); the rules only added cost ($0.136 vs $0.087 per run). On this task, today's models already keep scope without being told.
 
 ## What changed because of these evals
+- **`core.md` was trimmed** to the skill routing plus a few safety and context lines (about half the words: 735 → 358), because the general rules showed no effect. `scope-rules-on` now carries the trimmed version.
 - **Skill descriptions alone weren't enough.** In the first pass the plugin's skills were loaded but never used (spec 0×, interview 0×, web-researcher 0×), and Claude went straight to building. A "Skill routing" section — in `rules/core.md`, and printed by the core plugin's SessionStart hook in repos that don't have the rules yet — fixed it.
 - **Firmer routing wording** ("first action is the Skill call, however small the codebase looks") moved spec from "I'll just implement it" to writing SPEC.md + tasks/plan.md and stopping. The two guard cases confirm it doesn't over-trigger.
 
