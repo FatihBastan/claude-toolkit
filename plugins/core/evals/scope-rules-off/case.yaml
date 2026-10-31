@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: scope-rules-off
+description: Off-by-one fix next to ugly-but-working code. Measures scope discipline and verification reporting WITHOUT the toolkit's core rules (compare the two cases; run with --ablation none).
+tags: [rules]
+context:
+  scaffold_script: scaffold.sh

@@ -1,0 +1,8 @@
+{
+  "name": "core",
+  "description": "Fatih's always-on Claude Code core: repo setup, spec/build/ship workflow, TDD, root-cause debugging, docs-first coding, and helper agents.",
+  "author": {
+    "name": "Fatih Baştan",
+    "url": "https://github.com/FatihBastan"
+  }
+}

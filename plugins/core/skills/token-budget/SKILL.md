@@ -1,7 +1,6 @@
 ---
 name: token-budget
-description: Audit this repo for what burns input tokens without helping accuracy, and propose deny rules (.claude/settings.json) and "Don't read" entries (CLAUDE.md). Use when a project feels slow or expensive, or as a health check.
-disable-model-invocation: true
+description: Use when the user says Claude is slow, expensive or reading junk in this repo, or asks for a context/token health check: audits what burns tokens and proposes deny rules and CLAUDE.md trims.
 ---
 
 # token-budget

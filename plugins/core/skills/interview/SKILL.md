@@ -1,13 +1,12 @@
 ---
 name: interview
-description: Interview the user one question at a time, each with a best guess attached, until the real goal is clear — before any spec or code. Use when an ask is vague ("build me X", "make it faster").
-disable-model-invocation: true
+description: Use when a request is too vague to build well — missing who it's for, why, what success looks like, or the key constraint ("build me X", "make it faster"): ask one question at a time with a best guess until the goal is clear.
 argument-hint: "<the ask>"
 ---
 
 # interview
 
-The ask: $ARGUMENTS
+The ask: $ARGUMENTS (if empty, the request being discussed)
 
 What people ask for and what they want differ. The cheapest moment to find the gap is before anything exists. Needs a live user — in an unattended run, list the open questions as blockers instead.
 
@@ -41,6 +40,6 @@ Constraint:   …
 Out of scope: …
 Yes / no / refine?
 ```
-After a "yes", hand off: `/spec` for features, or just do it if it's small.
+After a "yes", hand off to the spec skill for features, or just do it if it's small.
 
 *Adapted from addyosmani/agent-skills `interview-me` (MIT).*

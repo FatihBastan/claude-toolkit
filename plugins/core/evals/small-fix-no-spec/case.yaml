@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: small-fix-no-spec
+description: A trivial rename must be done directly — the spec workflow must not fire (over-triggering guard).
+tags: [workflow, guard]
+context:
+  scaffold_script: scaffold.sh
