@@ -60,6 +60,6 @@ Depends on: Task 3
 
 ## Task 7: Ship
 Acceptance:
-- [ ] Move `SPEC.md` + `tasks/plan.md` to `docs/specs/avionics-pack/` (keeps the root clean); open a PR; merge on your OK.
+- [x] Move `SPEC.md` + `tasks/plan.md` to `docs/specs/avionics-pack/` (keeps the root clean); open a PR; merge on your OK.
 Verify: validate · PR diff review
 Depends on: Tasks 1–6
