@@ -22,7 +22,7 @@ Depends on: —
 
 ## Task 3: `avionics` plugin + `requirements` skill
 Acceptance:
-- [ ] Covers DO-178C HLR/LLR **and** DO-330 TOR/TR.
+- [x] Covers DO-178C HLR/LLR **and** DO-330 TOR/TR.
 - [x] `plugins/avionics/skills/requirements/SKILL.md` with a "Use when … / Not for …" description (≤ ~300 chars), a body ≤ ~120 lines, and `references/doors-csv.md` + `references/reqif-skeleton.xml` loaded only when exporting.
 - [x] `plugins/avionics/routing.md` holds the one routing line.
 - [x] Marketplace entry `avionics` with `defaultEnabled: false`; `plugins/core/packs/avionics` symlink.
@@ -32,12 +32,12 @@ Depends on: —
 
 ## Task 4: init-repo wiring
 Acceptance:
-- [ ] Detection rows: `*.gpj` **or the `avionics` argument** → avionics + `safety-c` + `green-hills`; Qt (`find_package(Qt6`/`Qt5`, `*.pro`) → `cpp` + `qt` + `qt.json`.
-- [ ] Path rewriting: `safety-c` → runtime dir, `qualified-tool` → asked tool dir, `cpp` → editor + codegen dirs only, `qt` → editor dir. An explicit "no rule on the runtime dir except `safety-c` + `core`" check.
-- [ ] Pack routing: the lines from each enabled pack's `routing.md` are appended under "## Skill routing" in the repo's `core.md`, re-applied on `refresh`, **idempotent** (running twice adds nothing).
-- [ ] Portable copy list includes `avionics → requirements` (+ references).
+- [x] Detection rows: `*.gpj` **or the `avionics` argument** → avionics + `safety-c` + `green-hills`; Qt (`find_package(Qt6`/`Qt5`, `*.pro`) → `cpp` + `qt` + `qt.json`.
+- [x] Path rewriting: `safety-c` → runtime dir, `qualified-tool` → asked tool dir, `cpp` → editor + codegen dirs only, `qt` → editor dir. An explicit "no rule on the runtime dir except `safety-c` + `core`" check.
+- [x] Pack routing: the lines from each enabled pack's `routing.md` are appended under "## Skill routing" in the repo's `core.md`, re-applied on `refresh`, **idempotent** (running twice adds nothing).
+- [x] Portable copy list includes `avionics → requirements` (+ references).
 Verify: `plugins/core/scripts/rule-scopes.py` (new, tiny) reports which rules hit which files; dry-run the mechanical steps on a fake repo, run the routing insert twice (no duplicates); (`runtime/app.gpj` + `.c`, `editor/CMakeLists.txt` with `find_package(Qt6`, `codegen/`): the resulting `.claude/rules/*` globs don't overlap on `runtime/**` · validate
-Files: `plugins/core/skills/init-repo/SKILL.md`
+Files: `plugins/core/skills/init-repo/SKILL.md`, `plugins/core/scripts/add-routing.py`
 Depends on: Tasks 1–3
 
 **Checkpoint B:** a fake repo gets exactly the intended rule set per dir.

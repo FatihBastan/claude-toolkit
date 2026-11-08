@@ -1,7 +1,7 @@
 ---
 name: init-repo
 description: Use when the user asks to set up, configure or refresh a repo for Claude, or agrees to it after a session-start note says the repo isn't set up: writes CLAUDE.md, .claude/settings.json, path-scoped rules and the right stack packs.
-argument-hint: "[refresh] [portable|plugin]"
+argument-hint: "[refresh] [portable|plugin] [avionics]"
 ---
 
 # init-repo
@@ -27,6 +27,8 @@ Goal: make this repo Claude-ready in one pass, reading as little as possible. Yo
 | `pubspec.yaml` | Flutter | `flutter` | `dart-flutter` | `flutter` | mobile |
 | Python + (`torch`/`tensorflow`/`jax`/`transformers` in deps, `train.py`, `*.ipynb`) | Python ML | `python-ml` | `python` | `python`, `ml` | ml |
 | other Python (`pyproject.toml`, `requirements*.txt`) | Python | `base` | `python` | `python` | — |
+| `*.gpj` (Green Hills MULTI project), or the `avionics` argument (a new repo may build only with CMake so far) | avionics (DO-178C) | `base` | see "Avionics" in step 4 | `green-hills` | avionics |
+| `find_package(Qt6` / `Qt5` in a `CMakeLists.txt`, or a `*.pro` | Qt | `base` | `cpp` + `qt` | `qt` | — |
 | `CMakeLists.txt`, `Makefile` + C/C++ sources | C/C++ | `base` | `cpp` | — | — |
 
    Read at most: the dependency manifest(s), `README.md` (first 80 lines), one stack config file (`ProjectSettings/ProjectVersion.txt`, `tsconfig.json`, `next.config.*`, `pyproject.toml`, …), and the existing `CLAUDE.md`. For "where does X live" questions use the **Explore** subagent instead of reading more.
@@ -46,6 +48,7 @@ Goal: make this repo Claude-ready in one pass, reading as little as possible. Yo
    - Existing `CLAUDE.md`: merge (default), replace, or leave alone.
    - Session logging (`notes/daily/` handoff notes + hooks)? Default: no — built-in auto memory covers most of it. Suggest yes only for long multi-week projects.
    - Unity / Godot: set up the editor MCP server too? Default: no (it needs an Editor package / Node).
+   - Avionics: the airborne runtime dir (default: the dir holding the `*.gpj`, else `runtime/`), the DO-330 qualified tool's dir (default: `codegen/` or `tools/` if present, else none) and the Qt editor's dir (default: the dir whose `CMakeLists.txt` finds Qt). Recommend portable: work networks often can't reach GitHub.
 
    If `refresh` was passed: skip questions you already have answers to — read the mode from `.claude/settings.json` (`core@fatih-toolkit: true` means plugin) and keep existing choices.
 
@@ -75,7 +78,17 @@ Merge, never clobber:
 
 ## 4. Rules → `.claude/rules/`
 
-Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescript`, `unity-csharp`, `dart-flutter`, `cpp`). If a stack lives in a subdirectory (e.g. the Unity project is in `game/`), rewrite the rule's `paths:` globs to start with that dir. Don't copy rules for languages the repo doesn't use.
+Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescript`, `unity-csharp`, `dart-flutter`, `cpp`, `qt`). If a stack lives in a subdirectory (e.g. the Unity project is in `game/`), rewrite the rule's `paths:` globs to start with that dir. Don't copy rules for languages the repo doesn't use. `qt` ships scoped to `editor/`: point it at the Qt project's dir (`**/…` when that's the repo root).
+
+**Avionics** — airborne C must get `safety-c` only, so scope every rule to its own dirs (one glob per dir; `paths:` has no exclusions):
+- `safety-c` → `<runtime>/**/*.{c,h}`.
+- `qualified-tool` → `<tool>/**/*.{c,cc,cpp,cxx,h,hh,hpp,hxx}` (skip if there's no tool dir).
+- `qt` → `<editor>/**/*.{cpp,cc,cxx,h,hh,hpp,hxx}`.
+- `cpp` → one `<dir>/**/*.{c,cc,cpp,cxx,h,hh,hpp,hxx}` line per C++ dir (editor, tool), never the runtime.
+- Then run `python3 CORE/scripts/rule-scopes.py`: it must report no `CLASH`. Fix the globs until it does.
+- Name the code generator's output dir in CLAUDE.md as generated: never edited by hand.
+
+**Pack routing** — for each pack enabled or copied that has `CORE/packs/<pack>/routing.md`, run `python3 CORE/scripts/add-routing.py .claude/rules/core.md CORE/packs/<pack>/routing.md`. It adds only missing lines, so re-running is safe; on `refresh` run it again after `core.md` is updated.
 
 ## 5. Skills, agents, packs
 
@@ -87,6 +100,7 @@ Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescrip
   - mobile → `CORE/packs/mobile/skills/flutter-screen`
   - ml → `CORE/packs/ml/skills/ml-paper-repro` + `CORE/packs/ml/agents/*.md`
   - web3d → `CORE/packs/web3d/skills/web3d-stack` (the whole folder, `references/` included)
+  - avionics → `CORE/packs/avionics/skills/requirements` (the whole folder, `references/` included)
   - gamedev → follow `CORE/packs/gamedev/skills/setup/SKILL.md` in portable mode.
 - Use `cp -RL` (the packs are symlinks in a clone). A first run never overwrites a file that already exists and differs — ask. On `refresh`, toolkit-owned copies (the skills, agents and rules listed here) are updated in place; list what changed.
 
@@ -105,7 +119,7 @@ Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescrip
 
 ## 6. Report (5–8 lines)
 
-- Stacks detected, mode, template used.
+- Stacks detected, mode, template used. Avionics: the rule → dir mapping and the `rule-scopes.py` result.
 - Files written or changed (paths).
 - Packs enabled or copied.
 - `{{TODO}}` markers left in CLAUDE.md.
