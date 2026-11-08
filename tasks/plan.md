@@ -23,9 +23,9 @@ Depends on: —
 ## Task 3: `avionics` plugin + `requirements` skill
 Acceptance:
 - [ ] Covers DO-178C HLR/LLR **and** DO-330 TOR/TR.
-- [ ] `plugins/avionics/skills/requirements/SKILL.md` with a "Use when … / Not for …" description (≤ ~300 chars), a body ≤ ~120 lines, and `references/doors-csv.md` + `references/reqif-skeleton.xml` loaded only when exporting.
-- [ ] `plugins/avionics/routing.md` holds the one routing line.
-- [ ] Marketplace entry `avionics` with `defaultEnabled: false`; `plugins/core/packs/avionics` symlink.
+- [x] `plugins/avionics/skills/requirements/SKILL.md` with a "Use when … / Not for …" description (≤ ~300 chars), a body ≤ ~120 lines, and `references/doors-csv.md` + `references/reqif-skeleton.xml` loaded only when exporting.
+- [x] `plugins/avionics/routing.md` holds the one routing line.
+- [x] Marketplace entry `avionics` with `defaultEnabled: false`; `plugins/core/packs/avionics` symlink.
 Verify: `scripts/validate.sh` · `claude plugin details avionics@fatih-toolkit` ≤ 0.15k always-on · install from a local copy and check the skill is listed
 Files: `plugins/avionics/**`, `.claude-plugin/marketplace.json`, `plugins/core/packs/avionics`
 Depends on: —

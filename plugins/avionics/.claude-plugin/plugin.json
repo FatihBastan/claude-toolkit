@@ -1,0 +1,5 @@
+{
+  "name": "avionics",
+  "description": "DO-178C / DO-330 repos: requirements skill (HLR, LLR, TOR, TR — trace checks, DOORS CSV/ReqIF export). Rules safety-c, qualified-tool and qt are copied in by /core:init-repo.",
+  "author": { "name": "Fatih Baştan", "url": "https://github.com/FatihBastan" }
+}
