@@ -46,7 +46,7 @@ Goal: make this repo Claude-ready in one pass, reading as little as possible. Yo
 4. Ask everything you need in **one** message, each with your default, then wait:
    - Delivery mode (skip if already decided).
    - Existing `CLAUDE.md`: merge (default), replace, or leave alone.
-   - Session logging (`notes/daily/` handoff notes + hooks)? Default: no — built-in auto memory covers most of it. Suggest yes only for long multi-week projects.
+   - Session logging (`notes/daily/` handoff notes + hooks)? Default: **no**: built-in auto memory and the repo's spec/plan files cover it. Turn it on only after an explicit yes. If you can't ask (auto mode, unattended), leave it off.
    - Unity / Godot: set up the editor MCP server too? Default: no (it needs an Editor package / Node).
    - Avionics: the airborne runtime dir (default: the dir holding the `*.gpj`, else `runtime/`), the DO-330 qualified tool's dir (default: `codegen/` or `tools/` if present, else none) and the Qt editor's dir (default: the dir whose `CMakeLists.txt` finds Qt). Recommend portable: work networks often can't reach GitHub.
 
@@ -107,7 +107,7 @@ Copy `CORE/rules/core.md` plus each detected language rule (`python`, `typescrip
 **Plugin** — copy nothing. If the `claude` CLI is on PATH, run `claude plugin install <pack>@fatih-toolkit --scope project` for each pack: it writes the `enabledPlugins` entry and fetches the plugin. Without the CLI, the `enabledPlugins` entries from step 3 are enough — relative-path plugins load from the marketplace without an install step. For gamedev, still follow `CORE/packs/gamedev/skills/setup/SKILL.md`, which adds the upstream gamedev marketplace.
 
 **Session logging (only if the user said yes):**
-- `mkdir -p notes/daily`, and suggest adding `notes/daily/` to `.gitignore` (personal noise).
+- `mkdir -p notes/daily`, and suggest adding `notes/daily/` to `.gitignore` (personal noise). On Windows, also suggest `*.sh text eol=lf` in `.gitattributes`: CRLF line endings break the hooks in a fresh clone.
 - Plugin mode: add `"session-log@fatih-toolkit": true` to `enabledPlugins`.
 - Portable mode: copy `CORE/packs/session-log/skills/session-log` → `.claude/skills/` and `CORE/packs/session-log/scripts/*.sh` → `.claude/hooks/` (`chmod +x` them), then merge into settings:
   ```json

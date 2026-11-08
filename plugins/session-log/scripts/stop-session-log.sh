@@ -14,11 +14,10 @@ set -euo pipefail
 
 INPUT="$(cat)"
 
-# jq is the only non-builtin dependency. Bail quietly if missing.
-command -v jq >/dev/null 2>&1 || exit 0
-
-STOP_ACTIVE="$(printf '%s' "$INPUT" | jq -r '.stop_hook_active // false')"
-[ "$STOP_ACTIVE" = "true" ] && exit 0
+# No jq: plain bash + grep, so it also runs in Git Bash on Windows.
+if printf '%s' "$INPUT" | grep -Eq '"stop_hook_active"[[:space:]]*:[[:space:]]*true'; then
+  exit 0
+fi
 
 PROJECT="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 DAILY="$PROJECT/notes/daily"
@@ -33,4 +32,6 @@ fi
 
 REASON="Before stopping: this project uses session logging but today's entry has not been written in the last hour. Invoke the session-log skill (Mode 1) and write a Session block to notes/daily/$TODAY.md, then stop. If the user explicitly said not to log, acknowledge and stop without writing."
 
-jq -n --arg reason "$REASON" '{decision: "block", reason: $reason}'
+REASON="${REASON//\\/\\\\}"
+REASON="${REASON//\"/\\\"}"
+printf '{"decision": "block", "reason": "%s"}\n' "$REASON"
