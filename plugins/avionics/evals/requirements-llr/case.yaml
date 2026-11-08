@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: requirements-llr
+description: Write DO-178C low-level requirements for a small C watchdog, as a DOORS CSV. Checks the project's ID scheme, one "shall" per row, parent trace or a derived flag, the attributes DO-178C needs, and robustness coverage.
+tags: [avionics, requirements]
+context:
+  scaffold_script: scaffold.sh

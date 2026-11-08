@@ -81,6 +81,20 @@
       "defaultEnabled": false
     },
     {
+      "name": "avionics",
+      "source": "./plugins/avionics",
+      "description": "DO-178C / DO-330 repos: requirements skill (HLR/LLR, TOR/TR, trace checks, DOORS CSV/ReqIF export). /core:init-repo adds the safety-c, qualified-tool and qt rules.",
+      "category": "development",
+      "keywords": [
+        "do-178c",
+        "do-330",
+        "requirements",
+        "misra",
+        "avionics"
+      ],
+      "defaultEnabled": false
+    },
+    {
       "name": "session-log",
       "source": "./plugins/session-log",
       "description": "Per-project handoff notes in notes/daily/ with resume-on-start and log-before-stop hooks. No-op unless notes/daily/ exists.",

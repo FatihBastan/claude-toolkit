@@ -19,7 +19,7 @@ Then in `/plugin` → Marketplaces → `fatih-toolkit` → **Enable auto-update*
 **Once per repo:** run `/core:init-repo` in the repo. It detects the stack and writes:
 - `CLAUDE.md` — a ≤ 80-line map from the matching template
 - `.claude/settings.json` — deny rules for secrets/binaries/build output, plus the right packs
-- `.claude/rules/` — `core.md` plus path-scoped language rules
+- `.claude/rules/` — `core.md` plus path-scoped language rules (`python`, `typescript`, `cpp`, `qt`, `unity-csharp`, `dart-flutter`; avionics adds `safety-c` and `qualified-tool`)
 - in **portable** mode, copies of the skills and agents, so the repo also works in cloud sessions
 
 You don't have to remember this: in a repo that isn't set up yet, a session-start check tells Claude to offer it.
@@ -37,6 +37,7 @@ You don't have to remember this: in a repo that isn't set up yet, a session-star
 | `web` | Next.js repos | `nextjs-feature` | ~0.1k |
 | `mobile` | Flutter repos | `flutter-screen` | ~0.1k |
 | `ml` | PyTorch / research repos | `ml-paper-repro` · agents `pytorch-build-resolver`, `ml-reviewer` | ~0.3k |
+| `avionics` | DO-178C / DO-330 repos (`*.gpj`, or `/core:init-repo avionics`) | `requirements`: HLR/LLR + TOR/TR, trace checks, DOORS CSV/ReqIF export · init-repo adds the `safety-c` (MISRA C runtime), `qualified-tool` (code generator) and `qt` rules, each scoped to its own dir | ~0.1k |
 | `session-log` | long projects, opt-in | `notes/daily/` handoff notes + resume/log hooks | ~0.1k |
 
 \*From `claude plugin details`: descriptions loaded in every session. Bodies load only when used. Packs are `defaultEnabled: false` — they only turn on where a repo's settings enable them.
@@ -54,6 +55,8 @@ Claude picks these up by itself from what you say ("let's add X" → spec, "go" 
 ## Does it help? (evals)
 `plugins/core/evals/` holds a `claude plugin eval` suite that runs each case with and without the plugin. Latest results ([RESULTS.md](plugins/core/evals/RESULTS.md)): on Sonnet 5.5 the plugin adds **+0.37** on average (spec +0.89, interview +0.67, tdd +0.44, bug-hunt +0.33) and **+0.21** on Opus, with no over-triggering on the guard cases. The key ingredient is the **Skill routing** section in `rules/core.md`, which the core plugin's SessionStart hook also injects in repos that aren't set up yet.
 
+The `avionics` pack has its own case ([RESULTS.md](plugins/avionics/evals/RESULTS.md)): LLRs for a small C watchdog as a DOORS CSV scored **0.96 vs 0.78** on Sonnet. Without the skill there's no Derived attribute, and an un-traced start-up state gets silently pinned to an HLR.
+
 ## Layout
 ```
 .claude-plugin/marketplace.json   the catalog (marketplace "fatih-toolkit")
@@ -61,10 +64,11 @@ plugins/
   core/
     skills/  agents/              always-on workflow
     rules/                        copied to <repo>/.claude/rules/ by init-repo
+    scripts/                      session-start hook, rule-scopes.py (which rule hits which file), add-routing.py (pack routing lines)
     templates/claude-md/          CLAUDE.md per stack
     templates/settings/           permissions.deny fragments per stack
     packs/ → ../<pack>            symlinks so init-repo can copy pack files (dereferenced in the plugin cache)
-  gamedev/ web3d/ web/ mobile/ ml/ session-log/
+  gamedev/ web3d/ web/ mobile/ ml/ avionics/ session-log/   packs (a pack's routing.md is added to the repo's Skill routing)
 INIT.md                           no-plugin entry point (cloud sessions)
 NOTICE.md                         credits and licenses
 tips.md                           the habits behind the rules
