@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/moc_*.cpp)",
+      "Read(./**/ui_*.h)",
+      "Read(./**/qrc_*.cpp)",
+      "Read(./**/*_autogen/**)",
+      "Read(./**/build/**)",
+      "Read(./**/build-*/**)",
+      "Read(./**/cmake-build-*/**)"
+    ]
+  }
+}

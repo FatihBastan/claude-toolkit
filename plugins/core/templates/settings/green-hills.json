@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./**/*.o)",
+      "Read(./**/*.elf)",
+      "Read(./**/*.dbo)",
+      "Read(./**/*.dla)",
+      "Read(./**/*.dnm)",
+      "Read(./**/*.bin)"
+    ]
+  }
+}
