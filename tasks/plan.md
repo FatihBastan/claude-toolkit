@@ -44,7 +44,7 @@ Depends on: Tasks 1–3
 
 ## Task 5: README, NOTICE
 Acceptance:
-- [ ] README pack table row (measured cost) + a layout line; NOTICE line: MISRA/RTCA standards referenced by number only, no text reproduced.
+- [x] README pack table row (measured cost) + a layout line; NOTICE line: MISRA/RTCA standards referenced by number only, no text reproduced.
 Verify: read-through · validate
 Files: `README.md`, `NOTICE.md`
 Depends on: Task 3

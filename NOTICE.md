@@ -40,6 +40,9 @@ SOFTWARE.
 | [Coding-Solo/godot-mcp](https://github.com/Coding-Solo/godot-mcp) | MIT | Optional Godot MCP server |
 | three.js, React Three Fiber, drei, @react-three/rapier, @react-three/postprocessing, three.quarks, Yuka, Colyseus | MIT | Recommended in the `web3d-stack` skill; nothing vendored |
 
+## Standards
+The `avionics` pack and the `safety-c` / `qualified-tool` rules refer to DO-178C, DO-330 (RTCA / EUROCAE) and MISRA C:2012 (The MISRA Consortium) by name and rule number only. No text from these standards is reproduced; projects need their own licensed copies. DOORS is IBM's, INTEGRITY and MULTI are Green Hills Software's, and Qt is The Qt Company's; the toolkit is not affiliated with any of them.
+
 ## Ideas
 - Boris Cherny, *Mastering Claude Code in 30 minutes* (Anthropic, May 2025) — short CLAUDE.md, plan before coding, give Claude a way to verify its work, shared project config.
 - The selective-install advice from the ECC community thread: start small instead of installing hundreds of skills.
