@@ -25,7 +25,8 @@ How deep the tool levels go depends on the TQL (the less rigorous TQLs need only
 **Derived** requirements (not traceable to a parent: design decisions, robustness, partitioning) get `Derived = Y` plus a rationale, and must be passed to the system safety assessment. Never invent a parent to avoid the flag.
 
 ## 2. Writing rules — check every requirement
-- Exactly one "shall". No "and/or", "etc.", "as appropriate", "user-friendly", "fast", "robust", "support", "handle", "minimize", "if possible".
+- Exactly one "shall". An "otherwise …" branch or an "… and shall not change X" is a requirement of its own: split it, and check every row for a second "shall" before writing the file.
+- No "and/or", "etc.", "as appropriate", "user-friendly", "fast", "robust", "support", "handle", "minimize", "if possible".
 - Verifiable: a test, analysis, review or inspection gives pass or fail. Quantify: units, ranges, tolerances, timing, rates, states.
 - Pattern: *When <condition/mode>, the <component> shall <response> [within <time>].*
 - HLR and TOR say *what*; LLR and TR may say *how* (data, algorithm, sequence) — but no code.

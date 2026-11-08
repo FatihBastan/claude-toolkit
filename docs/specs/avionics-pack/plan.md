@@ -51,9 +51,9 @@ Depends on: Task 3
 
 ## Task 6: Eval case `requirements-llr`
 Acceptance:
-- [ ] `plugins/avionics/evals/requirements-llr/`: scaffold with a small C function + 2 parent HLRs; prompt "write the LLRs for this function, CSV for DOORS"; `append_system_prompt` carries the routing line in both arms.
-- [ ] Graders: unique-ID regex; one "shall" per row (llm); every row has a parent HLR ID (regex on CSV); verification-method column present; `Skill` indicator (with-only).
-- [ ] Run: 3 runs per arm, Sonnet, `--max-cost-usd 2` (≈ $0.5 expected, ≈ 0.75M tokens). Record the result in `plugins/avionics/evals/RESULTS.md`.
+- [x] `plugins/avionics/evals/requirements-llr/`: scaffold with a small C function + 2 parent HLRs; prompt "write the LLRs for this function, CSV for DOORS"; `append_system_prompt` carries the routing line in both arms.
+- [x] Graders: unique-ID regex; one "shall" per row (llm); every row has a parent HLR ID (regex on CSV); verification-method column present; `Skill` indicator (with-only).
+- [x] Run: 3 runs per arm, Sonnet, `--max-cost-usd 2` (≈ $0.5 expected, ≈ 0.75M tokens). Record the result in `plugins/avionics/evals/RESULTS.md`.
 Verify: the eval run itself; the guards in core aren't affected (no core change)
 Files: `plugins/avionics/evals/**`
 Depends on: Task 3

@@ -55,6 +55,8 @@ Claude picks these up by itself from what you say ("let's add X" → spec, "go" 
 ## Does it help? (evals)
 `plugins/core/evals/` holds a `claude plugin eval` suite that runs each case with and without the plugin. Latest results ([RESULTS.md](plugins/core/evals/RESULTS.md)): on Sonnet 5.5 the plugin adds **+0.37** on average (spec +0.89, interview +0.67, tdd +0.44, bug-hunt +0.33) and **+0.21** on Opus, with no over-triggering on the guard cases. The key ingredient is the **Skill routing** section in `rules/core.md`, which the core plugin's SessionStart hook also injects in repos that aren't set up yet.
 
+The `avionics` pack has its own case ([RESULTS.md](plugins/avionics/evals/RESULTS.md)): LLRs for a small C watchdog as a DOORS CSV scored **0.96 vs 0.78** on Sonnet. Without the skill there's no Derived attribute, and an un-traced start-up state gets silently pinned to an HLR.
+
 ## Layout
 ```
 .claude-plugin/marketplace.json   the catalog (marketplace "fatih-toolkit")
