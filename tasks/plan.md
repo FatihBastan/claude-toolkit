@@ -4,22 +4,25 @@ Order: the rules first (they're the core of the change and fix the `cpp` clash),
 
 ## Task 1: Path-scoped rules — `safety-c`, `qualified-tool`, `qt`
 Acceptance:
+- [ ] `qt.md` states it overrides `cpp.md`'s "no raw `new`" bullet for QObject parent ownership (both apply to `editor/**`).
 - [ ] Three files in `plugins/core/rules/`, each ≤ ~15 bullet lines, with placeholder `paths:` (`runtime/**/*.{c,h}`, `codegen/**/*.{cpp,cc,h,hpp}`, `editor/**/*.{cpp,h,hpp,ui}`), commented as "init-repo rewrites these".
 - [ ] No MISRA rule text, only rule numbers. Nothing company-specific.
 Verify: frontmatter parses (python yaml) · word count per file · `scripts/validate.sh`
 Files: `plugins/core/rules/safety-c.md`, `qualified-tool.md`, `qt.md`
 
-## Task 2: Green Hills settings fragment
+## Task 2: Green Hills + Qt settings fragments
 Acceptance:
-- [ ] `green-hills.json` denies `*.o`, `*.elf`, `*.dbo`, `*.dla`, `*.dnm`, `*.bin`, `*.map` (pending open question 2), plus the MULTI output dirs if they're conventionally named.
+- [ ] `green-hills.json` denies `*.o`, `*.elf`, `*.dbo`, `*.dla`, `*.dnm`, `*.bin` — **not** `*.map`.
+- [ ] `qt.json` denies `moc_*.cpp`, `ui_*.h`, `qrc_*.cpp`, `*_autogen/`, and build dirs (`build/`, `build-*/`, `cmake-build-*/`).
 Verify: `python3 -m json.tool` · `scripts/validate.sh`
-Files: `plugins/core/templates/settings/green-hills.json`
+Files: `plugins/core/templates/settings/green-hills.json`, `qt.json`
 Depends on: —
 
 **Checkpoint A:** validate passes; rules render.
 
 ## Task 3: `avionics` plugin + `requirements` skill
 Acceptance:
+- [ ] Covers DO-178C HLR/LLR **and** DO-330 TOR/TR.
 - [ ] `plugins/avionics/skills/requirements/SKILL.md` with a "Use when … / Not for …" description (≤ ~300 chars), a body ≤ ~120 lines, and `references/doors-csv.md` + `references/reqif-skeleton.xml` loaded only when exporting.
 - [ ] `plugins/avionics/routing.md` holds the one routing line.
 - [ ] Marketplace entry `avionics` with `defaultEnabled: false`; `plugins/core/packs/avionics` symlink.
@@ -29,11 +32,11 @@ Depends on: —
 
 ## Task 4: init-repo wiring
 Acceptance:
-- [ ] Detection rows: `*.gpj` → avionics + `safety-c` + `green-hills`; Qt (`find_package(Qt6`/`Qt5`, `*.pro`) → `cpp` + `qt`.
+- [ ] Detection rows: `*.gpj` **or the `avionics` argument** → avionics + `safety-c` + `green-hills`; Qt (`find_package(Qt6`/`Qt5`, `*.pro`) → `cpp` + `qt` + `qt.json`.
 - [ ] Path rewriting: `safety-c` → runtime dir, `qualified-tool` → asked tool dir, `cpp` → editor + codegen dirs only, `qt` → editor dir. An explicit "no rule on the runtime dir except `safety-c` + `core`" check.
-- [ ] Pack routing: the lines from each enabled pack's `routing.md` are appended under "## Skill routing" in the repo's `core.md`, and re-applied on `refresh`.
+- [ ] Pack routing: the lines from each enabled pack's `routing.md` are appended under "## Skill routing" in the repo's `core.md`, re-applied on `refresh`, **idempotent** (running twice adds nothing).
 - [ ] Portable copy list includes `avionics → requirements` (+ references).
-Verify: dry-run the mechanical steps on a fake repo (`runtime/app.gpj` + `.c`, `editor/CMakeLists.txt` with `find_package(Qt6`, `codegen/`): the resulting `.claude/rules/*` globs don't overlap on `runtime/**` · validate
+Verify: `plugins/core/scripts/rule-scopes.py` (new, tiny) reports which rules hit which files; dry-run the mechanical steps on a fake repo, run the routing insert twice (no duplicates); (`runtime/app.gpj` + `.c`, `editor/CMakeLists.txt` with `find_package(Qt6`, `codegen/`): the resulting `.claude/rules/*` globs don't overlap on `runtime/**` · validate
 Files: `plugins/core/skills/init-repo/SKILL.md`
 Depends on: Tasks 1–3
 
